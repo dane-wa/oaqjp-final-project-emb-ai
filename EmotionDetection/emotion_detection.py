@@ -23,6 +23,11 @@ def emotion_detector(text_to_analyse):
 
     response = requests.post(url, json = MyJson, headers=header)
     formatted_response = json.loads(response.text)
+
+    # Vérifier si 'emotionPredictions' est présent
+    if 'emotionPredictions' not in formatted_response or not formatted_response['emotionPredictions']:
+        return {"error": "No emotionPredictions found", "data": formatted_response}
+
     emotion = formatted_response['emotionPredictions'][0]['emotion']
     dominant_emotion = ""
     score_dominant_emotion = 0
